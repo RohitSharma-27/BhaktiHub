@@ -1,50 +1,64 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 import { MapPin, Mail, MessageCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 
+import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
-const isValidIndianPhone = (phone: string) => {
-  const value = phone.trim();
-
-  if (!/^[6-9]\d{9}$/.test(value)) {
-    return false;
-  }
-
-  // Reject numbers like 8888888888, 9999999999, etc.
-  if (/^(\d)\1{9}$/.test(value)) {
-    return false;
-  }
-
-  // Reject obvious test/sequential numbers
-  const fakeNumbers = [
-    '0123456789',
-    '1234567890',
-    '0987654321',
-    '9876543210',
-  ];
-
-  return !fakeNumbers.includes(value);
-};
-
-const isValidEmail = (email: string) => {
-  const value = email.trim();
-
-  return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value);
-};
-
 export default function Contact() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { toast } = useToast();
 
+  const [contactOpen, setContactOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: user?.name ?? '',
+    email: user?.email ?? '',
+    phone: user?.phone ?? '',
     subject: '',
     message: '',
   });
 
-  const [submitting, setSubmitting] = useState(false);
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name,
+        email: user.email,
+        phone: user.phone ?? '',
+      }));
+    }
+  }, [user]);
+
+  const isValidIndianPhone = (phone: string) => {
+    const value = phone.trim();
+
+    if (!/^[6-9]\d{9}$/.test(value)) {
+      return false;
+    }
+
+    // Reject numbers like 7777777777, 8888888888, etc.
+    if (/^(\d)\1{9}$/.test(value)) {
+      return false;
+    }
+
+    // Reject obvious test/sequential numbers.
+    const fakeNumbers = [
+      '0123456789',
+      '1234567890',
+      '0987654321',
+      '9876543210',
+    ];
+
+    return !fakeNumbers.includes(value);
+  };
+
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email.trim());
+  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,31 +71,69 @@ export default function Contact() {
     }));
   };
 
- const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleContactClick = () => {
+    if (!user) {
+      toast('Please sign in to contact BhaktiHub.', 'info');
+      navigate('/login');
+      return;
+    }
 
-  const email = formData.email.trim();
-  const phone = formData.phone.trim();
+    setFormData((prev) => ({
+      ...prev,
+      name: user.name,
+      email: user.email,
+      phone: user.phone ?? '',
+      subject: '',
+      message: '',
+    }));
 
-  if (!isValidEmail(email)) {
-    toast('Please enter a valid email address.', 'error');
-    return;
-  }
+    setContactOpen(true);
+  };
 
-  if (!isValidIndianPhone(phone)) {
-    toast('Please enter a valid 10-digit mobile number.', 'error');
-    return;
-  }
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setSubmitting(true);
+    if (!user) {
+      toast('Please sign in to continue.', 'info');
+      navigate('/login');
+      return;
+    }
+
+    const email = formData.email.trim();
+    const phone = formData.phone.trim();
+    const name = formData.name.trim();
+    const subject = formData.subject.trim();
+    const message = formData.message.trim();
+
+    if (!name) {
+      toast('Name is required.', 'error');
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      toast('Please enter a valid email address.', 'error');
+      return;
+    }
+
+    if (!isValidIndianPhone(phone)) {
+      toast('Please enter a valid 10-digit mobile number.', 'error');
+      return;
+    }
+
+    if (message.length < 10) {
+      toast('Message must be at least 10 characters.', 'error');
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
       const templateParams = {
-        customer_name: formData.name,
+        customer_name: name,
         customer_email: email,
-customer_phone: phone,
-        subject: formData.subject || 'General Enquiry',
-        message: formData.message,
+        customer_phone: phone,
+        subject: subject || 'General Enquiry',
+        message,
         time: new Date().toLocaleString('en-IN'),
       };
 
@@ -97,10 +149,12 @@ customer_phone: phone,
         'success'
       );
 
+      setContactOpen(false);
+
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
+        name: user.name,
+        email: user.email,
+        phone: user.phone ?? '',
         subject: '',
         message: '',
       });
@@ -140,7 +194,7 @@ customer_phone: phone,
         </div>
       </div>
 
-      {/* Contact Cards */}
+      {/* Contact Information */}
       <div className="container-page py-12">
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -180,171 +234,205 @@ customer_phone: phone,
 
         </div>
 
-        {/* Contact Form */}
+        {/* Contact CTA */}
         <div className="mt-14">
-          <div className="card max-w-4xl mx-auto p-8">
+          <div className="card max-w-4xl mx-auto p-8 text-center">
 
-            <div className="text-center mb-8">
-              <h2 className="font-display text-3xl font-bold text-neutral-900">
-                Send Us a Message
-              </h2>
-
-              <p className="text-neutral-500 mt-2">
-                Fill out the form below and our team will get back to you as
-                soon as possible.
-              </p>
+            <div className="w-14 h-14 rounded-full bg-saffron-100 flex items-center justify-center mx-auto mb-4">
+              <MessageCircle className="w-7 h-7 text-saffron-600" />
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            <h2 className="font-display text-3xl font-bold text-neutral-900">
+              Need Help?
+            </h2>
+
+            <p className="text-neutral-500 mt-2 max-w-xl mx-auto">
+              Have a question about bookings, artists, or BhaktiHub?
+              Contact our team and we'll get back to you.
+            </p>
+
+            <button
+              type="button"
+              onClick={handleContactClick}
+              className="btn-primary mt-6 px-8 py-3"
             >
+              <MessageCircle className="w-5 h-5" />
+              Contact BhaktiHub
+            </button>
 
-              {/* Full Name */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Full Name *
-                </label>
-
-                <input
-  id="name"
-  name="name"
-  type="text"
-  required
-  value={formData.name}
-  onChange={handleChange}
-  placeholder="Enter your full name"
-  minLength={2}
-  maxLength={60}
-  className="input-field"
-/>
-              </div>
-
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Email Address *
-                </label>
-
-               <input
-  id="email"
-  name="email"
-  type="email"
-  required
-  value={formData.email}
-  onChange={handleChange}
-  placeholder="Enter your email"
- pattern="[^\s@]+@[^\s@]+\.[A-Za-z]{2,}"
-title="Please enter a valid email address, for example: name@gmail.com"
-  className="input-field"
-/>
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Phone Number *
-                </label>
-
-                <input
-  id="phone"
-  name="phone"
-  type="tel"
-  required
-  value={formData.phone}
-  onChange={(e) =>
-  setFormData((prev) => ({
-    ...prev,
-    phone: e.target.value.replace(/\D/g, '').slice(0, 10),
-  }))
-}
-  placeholder="Enter your 10-digit mobile number"
-  minLength={10}
-  maxLength={10}
-  pattern="[6-9][0-9]{9}"
-  title="Please enter a valid number"
-  inputMode="numeric"
-  className="input-field"
-/>
-              </div>
-
-              {/* Subject */}
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Subject
-                </label>
-
-                <input
-                  id="subject"
-                  name="subject"
-                  type="text"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Enter subject"
-                  className="input-field"
-                />
-              </div>
-
-              {/* Message */}
-              <div className="md:col-span-2">
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-2"
-                >
-                  Message *
-                </label>
-
-                <textarea
-  id="message"
-  name="message"
-  required
-  rows={6}
-  value={formData.message}
-  onChange={handleChange}
-  placeholder="Tell us how we can help you..."
-  minLength={10}
-  maxLength={1000}
-  className="input-field resize-none"
-/>
-              </div>
-
-              {/* Submit */}
-              <div className="md:col-span-2 text-center">
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="btn btn-primary px-10 py-3"
-                >
-                  {submitting ? 'Sending...' : 'Send Message'}
-                </button>
-
-                <p className="text-sm text-neutral-500 mt-4">
-                  We usually respond within 24 hours.
-                </p>
-
-              </div>
-
-            </form>
-
+            {!user && (
+              <p className="text-sm text-neutral-400 mt-4">
+                Please sign in before sending a message.
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Contact Form */}
+        {contactOpen && (
+          <div className="mt-10">
+            <div className="card max-w-4xl mx-auto p-8">
+
+              <div className="text-center mb-8">
+                <h2 className="font-display text-3xl font-bold text-neutral-900">
+                  Send Us a Message
+                </h2>
+
+                <p className="text-neutral-500 mt-2">
+                  Your account details are already filled in.
+                  Just add a subject and your message.
+                </p>
+              </div>
+
+              <form
+                onSubmit={handleSubmit}
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+
+                {/* Full Name */}
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Full Name
+                  </label>
+
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    readOnly
+                    autoComplete="name"
+                    value={formData.name}
+                    className="input-field bg-cream-50"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Email Address
+                  </label>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    readOnly
+                    autoComplete="email"
+                    value={formData.email}
+                    className="input-field bg-cream-50"
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Phone Number
+                  </label>
+
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    readOnly
+                    autoComplete="tel"
+                    inputMode="numeric"
+                    value={formData.phone}
+                    className="input-field bg-cream-50"
+                  />
+                </div>
+
+                {/* Subject */}
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Subject
+                  </label>
+
+                  <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="Enter subject"
+                    maxLength={100}
+                    autoComplete="off"
+                    className="input-field"
+                  />
+                </div>
+
+                {/* Message */}
+                <div className="md:col-span-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium mb-2"
+                  >
+                    Message *
+                  </label>
+
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={6}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us how we can help you..."
+                    minLength={10}
+                    maxLength={1000}
+                    className="input-field resize-none"
+                  />
+                </div>
+
+                {/* Actions */}
+                <div className="md:col-span-2 flex flex-col sm:flex-row gap-3 justify-center">
+
+                  <button
+                    type="button"
+                    onClick={() => setContactOpen(false)}
+                    className="btn-ghost px-8 py-3"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn btn-primary px-10 py-3"
+                  >
+                    {submitting ? 'Sending...' : 'Send Message'}
+                  </button>
+
+                </div>
+
+                <div className="md:col-span-2 text-center">
+                  <p className="text-sm text-neutral-500">
+                    We usually respond within 24 hours.
+                  </p>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Support Hours */}
-      <div className="mt-14">
+      <div className="container-page pb-14">
         <div className="card max-w-4xl mx-auto p-8">
           <div className="text-center">
 
@@ -380,7 +468,7 @@ title="Please enter a valid email address, for example: name@gmail.com"
       </div>
 
       {/* FAQ */}
-      <div className="mt-14 mb-16">
+      <div className="container-page pb-16">
         <div className="max-w-4xl mx-auto">
 
           <div className="text-center mb-8">

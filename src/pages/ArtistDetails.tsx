@@ -75,22 +75,22 @@ export default function ArtistDetails() {
 
   const [contactOpen, setContactOpen] = useState(false);
 
-  const [contactForm, setContactForm] = useState({
-    name: user?.name ?? '',
-    email: user?.email ?? '',
-    phone: '',
-  });
+ const [contactForm, setContactForm] = useState({
+  name: user?.name ?? '',
+  email: user?.email ?? '',
+  phone: user?.phone ?? '',
+});
 
-  useEffect(() => {
-    if (user) {
-      setContactForm((prev) => ({
-        ...prev,
-        name: user.name,
-        email: user.email,
-      }));
-    }
-  }, [user]);
-
+ useEffect(() => {
+  if (user) {
+    setContactForm((prev) => ({
+      ...prev,
+      name: user.name,
+      email: user.email,
+      phone: user.phone ?? '',
+    }));
+  }
+}, [user]);
   const { data: artist, loading } = useAsync<Artist | null>(
     () => fetchArtistById(id!),
     [id]
@@ -866,22 +866,23 @@ customer_phone: phone,
               Phone Number
             </label>
 
-            <input
+           <input
   type="tel"
   required
   value={contactForm.phone}
   onChange={(e) =>
-  setContactForm({
-    ...contactForm,
-    phone: e.target.value.replace(/\D/g, '').slice(0, 10),
-  })
-}
+    setContactForm({
+      ...contactForm,
+      phone: e.target.value.replace(/\D/g, '').slice(0, 10),
+    })
+  }
   placeholder="Enter 10-digit mobile number"
   minLength={10}
   maxLength={10}
   pattern="[6-9][0-9]{9}"
   title="Please enter a valid 10-digit number"
   inputMode="numeric"
+  autoComplete="tel"
   className="input-field"
 />
           </div>
