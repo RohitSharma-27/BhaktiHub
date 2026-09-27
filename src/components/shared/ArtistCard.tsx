@@ -8,12 +8,14 @@ interface ArtistCardProps {
   artist: Artist;
   isFavorite: boolean;
   onToggleFavorite: (artistId: string) => void;
+  priority?: boolean;
 }
 
 export default function ArtistCard({
   artist,
   isFavorite,
   onToggleFavorite,
+  priority = false,
 }: ArtistCardProps) {
   return (
     <div className="card group relative border border-cream-200/70 hover:shadow-glow hover:-translate-y-1 transition-all duration-300">
@@ -24,12 +26,14 @@ export default function ArtistCard({
         className="block relative overflow-hidden"
       >
         <div className="h-52 sm:h-56 overflow-hidden bg-cream-200">
-          <img
-            src={artist.image_url}
-            alt={artist.name}
-            loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+         <img
+  src={artist.image_url}
+  alt={artist.name}
+  loading={priority ? 'eager' : 'lazy'}
+  fetchPriority={priority ? 'high' : 'auto'}
+  decoding="async"
+  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+/>
         </div>
 
         {/* Verified Badge */}

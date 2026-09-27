@@ -191,14 +191,15 @@ export default function ArtistListingPage({ category, title, subtitle }: ArtistL
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {artists.map((artist) => (
-                <ArtistCard
-                  key={artist.id}
-                  artist={artist}
-                  isFavorite={favoriteIds.has(artist.id)}
-                  onToggleFavorite={handleToggleFavorite}
-                />
-              ))}
+              {artists.map((artist, index) => (
+  <ArtistCard
+    key={artist.id}
+    artist={artist}
+    isFavorite={favoriteIds.has(artist.id)}
+    onToggleFavorite={handleToggleFavorite}
+    priority={index < 3}
+  />
+))}
             </div>
             <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
           </>
