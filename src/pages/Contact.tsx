@@ -4,6 +4,35 @@ import emailjs from '@emailjs/browser';
 
 import { useToast } from '../context/ToastContext';
 
+const isValidIndianPhone = (phone: string) => {
+  const value = phone.trim();
+
+  if (!/^[6-9]\d{9}$/.test(value)) {
+    return false;
+  }
+
+  // Reject numbers like 8888888888, 9999999999, etc.
+  if (/^(\d)\1{9}$/.test(value)) {
+    return false;
+  }
+
+  // Reject obvious test/sequential numbers
+  const fakeNumbers = [
+    '0123456789',
+    '1234567890',
+    '0987654321',
+    '9876543210',
+  ];
+
+  return !fakeNumbers.includes(value);
+};
+
+const isValidEmail = (email: string) => {
+  const value = email.trim();
+
+  return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value);
+};
+
 export default function Contact() {
   const { toast } = useToast();
 
@@ -28,16 +57,29 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setSubmitting(true);
+  const email = formData.email.trim();
+  const phone = formData.phone.trim();
+
+  if (!isValidEmail(email)) {
+    toast('Please enter a valid email address.', 'error');
+    return;
+  }
+
+  if (!isValidIndianPhone(phone)) {
+    toast('Please enter a valid 10-digit mobile number.', 'error');
+    return;
+  }
+
+  setSubmitting(true);
 
     try {
       const templateParams = {
         customer_name: formData.name,
-        customer_email: formData.email,
-        customer_phone: formData.phone,
+        customer_email: email,
+customer_phone: phone,
         subject: formData.subject || 'General Enquiry',
         message: formData.message,
         time: new Date().toLocaleString('en-IN'),
@@ -198,8 +240,8 @@ export default function Contact() {
   value={formData.email}
   onChange={handleChange}
   placeholder="Enter your email"
-  pattern="[^\s@]+@[^\s@]+\.[^\s@]{2,}"
-  title="Please enter a valid email address, for example: name@gmail.com"
+ pattern="[^\s@]+@[^\s@]+\.[A-Za-z]{2,}"
+title="Please enter a valid email address, for example: name@gmail.com"
   className="input-field"
 />
               </div>
@@ -219,7 +261,12 @@ export default function Contact() {
   type="tel"
   required
   value={formData.phone}
-  onChange={handleChange}
+  onChange={(e) =>
+  setFormData((prev) => ({
+    ...prev,
+    phone: e.target.value.replace(/\D/g, '').slice(0, 10),
+  }))
+}
   placeholder="Enter your 10-digit mobile number"
   minLength={10}
   maxLength={10}

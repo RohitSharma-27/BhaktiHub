@@ -26,6 +26,35 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { formatPrice } from '../lib/utils';
 
+const isValidIndianPhone = (phone: string) => {
+  const value = phone.trim();
+
+  if (!/^[6-9]\d{9}$/.test(value)) {
+    return false;
+  }
+
+  // Reject numbers like 8888888888, 9999999999, etc.
+  if (/^(\d)\1{9}$/.test(value)) {
+    return false;
+  }
+
+  // Reject obvious test/sequential numbers
+  const fakeNumbers = [
+    '0123456789',
+    '1234567890',
+    '0987654321',
+    '9876543210',
+  ];
+
+  return !fakeNumbers.includes(value);
+};
+
+const isValidEmail = (email: string) => {
+  const value = email.trim();
+
+  return /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(value);
+};
+
 export default function ArtistDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -128,9 +157,22 @@ export default function ArtistDetails() {
       return;
     }
 
-    setSubmitting(true);
+   const email = contactForm.email.trim();
+const phone = contactForm.phone.trim();
 
-    try {
+if (!isValidEmail(email)) {
+  toast('Please enter a valid email address.', 'error');
+  return;
+}
+
+if (!isValidIndianPhone(phone)) {
+  toast('Please enter a valid 10-digit mobile number.', 'error');
+  return;
+}
+
+setSubmitting(true);
+
+try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -222,10 +264,9 @@ Devotional Artist Booking`;
         serviceId,
         templateId,
         {
-          customer_name: contactForm.name,
-          customer_email: contactForm.email,
-          customer_phone: contactForm.phone,
-
+          customer_name: contactForm.name.trim(),
+customer_email: email,
+customer_phone: phone,
           artist_name: artist.name,
 
           event_date: bookingForm.event_date,
@@ -244,14 +285,13 @@ Devotional Artist Booking`;
       );
 
       // Save booking only after admin email is successfully sent
-      await createBooking(
-        user.id,
-        contactForm.name,
-        contactForm.email,
-        artist.id,
-        bookingForm
-      );
-
+     await createBooking(
+  user.id,
+  contactForm.name.trim(),
+  email,
+  artist.id,
+  bookingForm
+);
       toast(
         'Booking request sent successfully. You will receive confirmation through email.',
         'success'
@@ -804,19 +844,21 @@ Devotional Artist Booking`;
               Email
             </label>
 
-            <input
-              type="email"
-              required
-              value={contactForm.email}
-              onChange={(e) =>
-                setContactForm({
-                  ...contactForm,
-                  email: e.target.value,
-                })
-              }
-              placeholder="you@example.com"
-              className="input-field"
-            />
+           <input
+  type="email"
+  required
+  value={contactForm.email}
+  onChange={(e) =>
+    setContactForm({
+      ...contactForm,
+      email: e.target.value,
+    })
+  }
+  placeholder="you@example.com"
+  pattern="[^\s@]+@[^\s@]+\.[A-Za-z]{2,}"
+  title="Please enter a valid email address, for example: name@gmail.com"
+  className="input-field"
+/>
           </div>
 
           <div>
@@ -829,11 +871,11 @@ Devotional Artist Booking`;
   required
   value={contactForm.phone}
   onChange={(e) =>
-    setContactForm({
-      ...contactForm,
-      phone: e.target.value,
-    })
-  }
+  setContactForm({
+    ...contactForm,
+    phone: e.target.value.replace(/\D/g, '').slice(0, 10),
+  })
+}
   placeholder="Enter 10-digit mobile number"
   minLength={10}
   maxLength={10}
