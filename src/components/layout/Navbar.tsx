@@ -72,7 +72,7 @@ export default function Navbar() {
         <Link to="/" className="flex items-center gap-2.5 shrink-0">
           <div className="w-10 h-10 rounded-xl bg-saffron-gradient flex items-center justify-center">
             <span className="font-display text-white text-xl font-bold">
-              B
+              S
             </span>
           </div>
 
