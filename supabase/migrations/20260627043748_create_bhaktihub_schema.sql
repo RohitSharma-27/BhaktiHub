@@ -1,8 +1,8 @@
 /*
-# BhaktiHub — Devotional Artist Booking Platform Schema
+# SankirtanHub — Devotional Artist Booking Platform Schema
 
 ## Overview
-Creates the full database schema for BhaktiHub, India's devotional artist booking platform.
+Creates the full database schema for SankirtanHub, India's devotional artist booking platform.
 Users can discover Bhajan Singers, Kirtan Mandalis, Musicians, Sound Providers, and Darbar Decorators.
 
 ## New Tables

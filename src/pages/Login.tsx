@@ -56,9 +56,9 @@ export default function Login() {
       return;
     }
 
-    toast('Welcome back to BhaktiHub!', 'success');
+    toast('Welcome back to SankirtanHub!', 'success');
 
-    if (email.trim().toLowerCase() === 'admin@bhaktihub.com') {
+    if (email.trim().toLowerCase() === 'admin@SankirtanHub.com') {
       navigate('/admin');
     } else {
       navigate('/dashboard');
@@ -170,7 +170,7 @@ export default function Login() {
 
             <div className="mt-6 pt-6 border-t border-cream-200 text-center">
               <p className="text-sm text-neutral-500">
-                New to BhaktiHub?{' '}
+                New to SankirtanHub?{' '}
 
                 <Link
                   to="/register"

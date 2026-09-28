@@ -78,7 +78,7 @@ export default function Navbar() {
 
           <div>
             <span className="font-display text-xl font-bold text-neutral-900">
-              BhaktiHub
+              SankirtanHub
             </span>
 
             <p className="text-[10px] text-saffron-600 font-medium -mt-1 hidden sm:block">

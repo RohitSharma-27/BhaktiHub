@@ -1,8 +1,8 @@
-# BhaktiHub — Devotional Artist & Event Services Platform
+# SankirtanHub — Devotional Artist & Event Services Platform
 
-BhaktiHub is a web platform for discovering devotional artists and event service providers for spiritual and cultural events across India.
+SankirtanHub is a web platform for discovering devotional artists and event service providers for spiritual and cultural events across India.
 
-Users can explore singers, musicians, sound providers, and other devotional event services, view artist profiles, submit booking requests, and contact BhaktiHub through a responsive web interface.
+Users can explore singers, musicians, sound providers, and other devotional event services, view artist profiles, submit booking requests, and contact SankirtanHub through a responsive web interface.
 
 ## Features
 
@@ -13,7 +13,7 @@ Users can explore singers, musicians, sound providers, and other devotional even
 * **Authentication** — User sign-up, sign-in, password validation, and protected user features
 * **Favorites** — Save artists for quick access
 * **User Dashboard** — View profile information and submitted booking requests
-* **Contact Us** — Visitors can send inquiries directly to the BhaktiHub team
+* **Contact Us** — Visitors can send inquiries directly to the SankirtanHub team
 * **Responsive Design** — Optimized for desktop, tablet, and mobile devices
 * **Privacy & Terms Pages** — Dedicated Privacy Policy and Terms of Service pages
 * **Responsive Modals & Forms** — Booking, contact, validation, loading, and success/error feedback
@@ -44,7 +44,7 @@ Users can explore singers, musicians, sound providers, and other devotional even
 ## Project Structure
 
 ```text
-BhaktiHub/
+SankirtanHub/
 ├── public/
 │   ├── artists/
 │   ├── musicians/
@@ -131,8 +131,8 @@ BhaktiHub/
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/BhaktiHub.git
-cd BhaktiHub
+git clone https://github.com/YOUR_USERNAME/SankirtanHub.git
+cd SankirtanHub
 ```
 
 Install dependencies:
@@ -182,7 +182,7 @@ npm run preview
 
 ## Deployment
 
-BhaktiHub can be deployed using modern frontend hosting platforms such as Vercel or Netlify.
+SankirtanHub can be deployed using modern frontend hosting platforms such as Vercel or Netlify.
 
 Typical deployment configuration:
 
@@ -202,7 +202,7 @@ The required environment variables must also be configured in the hosting provid
 3. User selects the booking option
 4. User provides event and contact details
 5. Booking request is submitted
-6. BhaktiHub receives the booking request by email
+6. SankirtanHub receives the booking request by email
 7. The user receives booking updates through the confirmation process
 
 ### Contact
@@ -217,7 +217,7 @@ Visitors can submit:
 * Subject
 * Message
 
-Contact messages are delivered to the BhaktiHub team through the configured email service.
+Contact messages are delivered to the SankirtanHub team through the configured email service.
 
 ## Responsive Design
 
@@ -249,4 +249,4 @@ This helps verify the production build before publishing changes.
 
 ## License
 
-© 2026 BhaktiHub. All rights reserved.
+© 2026 SankirtanHub. All rights reserved.

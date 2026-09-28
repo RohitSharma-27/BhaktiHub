@@ -22,7 +22,7 @@ export default function PrivacyPolicy() {
               1. Information We Collect
             </h2>
             <p>
-              When you use BhaktiHub, we may collect information such as your
+              When you use SankirtanHub, we may collect information such as your
               name, email address, phone number, booking details, event
               information, and other information you choose to provide.
             </p>
@@ -89,7 +89,7 @@ export default function PrivacyPolicy() {
               7. Artist Information
             </h2>
             <p>
-              Artist information displayed on BhaktiHub is provided for
+              Artist information displayed on SankirtanHub is provided for
               discovery and booking purposes. Certain artist contact
               information may be shared with a customer only after a booking
               has been confirmed.
@@ -101,7 +101,7 @@ export default function PrivacyPolicy() {
               8. Changes to This Policy
             </h2>
             <p>
-              We may update this Privacy Policy from time to time as BhaktiHub
+              We may update this Privacy Policy from time to time as SankirtanHub
               develops. Any updated version will be published on this page.
             </p>
           </section>
@@ -114,10 +114,10 @@ export default function PrivacyPolicy() {
               For questions regarding this Privacy Policy, please contact us
               at{' '}
               <a
-                href="mailto:bhaktihub.bookings@gmail.com"
+                href="mailto:SankirtanHub.bookings@gmail.com"
                 className="text-saffron-700 font-medium hover:underline"
               >
-                bhaktihub.bookings@gmail.com
+                SankirtanHub.bookings@gmail.com
               </a>
               .
             </p>
@@ -128,7 +128,7 @@ export default function PrivacyPolicy() {
               to="/"
               className="text-saffron-700 font-medium hover:underline"
             >
-              ← Back to BhaktiHub
+              ← Back to SankirtanHub
             </Link>
           </div>
 

@@ -73,7 +73,7 @@ export default function Contact() {
 
   const handleContactClick = () => {
     if (!user) {
-      toast('Please sign in to contact BhaktiHub.', 'info');
+      toast('Please sign in to contact SankirtanHub.', 'info');
       navigate('/login');
       return;
     }
@@ -187,7 +187,7 @@ export default function Contact() {
           </h1>
 
           <p className="text-neutral-600 max-w-2xl mx-auto text-lg">
-            Have questions about artist bookings or BhaktiHub? We're here to
+            Have questions about artist bookings or SankirtanHub? We're here to
             help you plan your spiritual event with ease.
           </p>
 
@@ -225,10 +225,10 @@ export default function Contact() {
             </h3>
 
             <a
-              href="mailto:bhaktihub.bookings@gmail.com"
+              href="mailto:SankirtanHub.bookings@gmail.com"
               className="text-neutral-600 hover:text-saffron-700 transition-colors"
             >
-              bhaktihub.bookings@gmail.com
+              SankirtanHub.bookings@gmail.com
             </a>
           </div>
 
@@ -247,7 +247,7 @@ export default function Contact() {
             </h2>
 
             <p className="text-neutral-500 mt-2 max-w-xl mx-auto">
-              Have a question about bookings, artists, or BhaktiHub?
+              Have a question about bookings, artists, or SankirtanHub?
               Contact our team and we'll get back to you.
             </p>
 
@@ -257,7 +257,7 @@ export default function Contact() {
               className="btn-primary mt-6 px-8 py-3"
             >
               <MessageCircle className="w-5 h-5" />
-              Contact BhaktiHub
+              Contact SankirtanHub
             </button>
 
             {!user && (
@@ -477,7 +477,7 @@ export default function Contact() {
             </h2>
 
             <p className="text-neutral-500 mt-2">
-              Quick answers to some common questions about BhaktiHub.
+              Quick answers to some common questions about SankirtanHub.
             </p>
           </div>
 
@@ -513,7 +513,7 @@ export default function Contact() {
               </h3>
 
               <p className="text-neutral-500 text-sm leading-6">
-                Yes. BhaktiHub is designed to connect users with devotional
+                Yes. SankirtanHub is designed to connect users with devotional
                 artists and service providers for events across India.
               </p>
             </div>

@@ -84,7 +84,7 @@ export async function updateArtistAvailability(
 // ==================== LOCAL BOOKINGS ====================
 
 const getBookingsKey = (userId: string) => {
-  return `bhaktihub_bookings_${userId}`;
+  return `SankirtanHub_bookings_${userId}`;
 };
 
 export async function fetchBookings(userId: string): Promise<Booking[]> {
@@ -182,7 +182,7 @@ export async function fetchAllBookings(): Promise<Booking[]> {
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
 
-    if (!key || !key.startsWith('bhaktihub_bookings_')) {
+    if (!key || !key.startsWith('SankirtanHub_bookings_')) {
       continue;
     }
 
@@ -212,7 +212,7 @@ export async function updateBookingStatus(
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
 
-    if (!key || !key.startsWith('bhaktihub_bookings_')) {
+    if (!key || !key.startsWith('SankirtanHub_bookings_')) {
       continue;
     }
 

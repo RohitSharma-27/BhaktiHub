@@ -130,7 +130,7 @@ export default function Register() {
     if (error) {
       toast(error, 'error');
     } else {
-      toast('Account created! Welcome to BhaktiHub.', 'success');
+      toast('Account created! Welcome to SankirtanHub.', 'success');
       navigate('/dashboard');
     }
   };
@@ -147,7 +147,7 @@ export default function Register() {
             </div>
 
             <h1 className="font-display text-3xl font-bold text-neutral-900">
-              Join BhaktiHub
+              Join SankirtanHub
             </h1>
 
             <p className="text-neutral-500 mt-2">

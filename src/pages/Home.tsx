@@ -434,7 +434,7 @@ setSearchSuggestions(matches.slice(0, 5));
   </section>
 )}
 
-{/* Why Book with BhaktiHub */}
+{/* Why Book with SankirtanHub */}
 <section className="relative overflow-hidden py-12 lg:py-20 bg-[#fff0dc] border-y border-[#ead8c0]">
   <div className="absolute inset-0 bg-temple-pattern opacity-[0.18] pointer-events-none" />
   <div className="absolute top-0 right-0 w-72 h-72 bg-gold-200/10 rounded-full blur-3xl pointer-events-none" />
@@ -450,7 +450,7 @@ setSearchSuggestions(matches.slice(0, 5));
      </div>
 
      <h2 className="section-title">
-         Why Book with BhaktiHub?
+         Why Book with SankirtanHub?
      </h2>
 
      <p className="section-subtitle max-w-2xl mx-auto">
@@ -473,7 +473,7 @@ setSearchSuggestions(matches.slice(0, 5));
   <div className="w-10 h-1 rounded-full bg-saffron-500 my-3"></div>
 
   <p className="text-neutral-600 leading-relaxed">
-    Every artist and service provider is carefully verified before being listed on BhaktiHub.
+    Every artist and service provider is carefully verified before being listed on SankirtanHub.
   </p>
 
 </div>

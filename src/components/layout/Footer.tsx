@@ -32,7 +32,7 @@ export default function Footer() {
               </div>
 
               <span className="font-display text-xl font-bold text-white">
-                BhaktiHub
+                SankirtanHub
               </span>
             </Link>
 
@@ -45,11 +45,11 @@ export default function Footer() {
             <div className="space-y-2 text-sm">
 
               <a
-                href="mailto:bhaktihub.bookings@gmail.com"
+                href="mailto:SankirtanHub.bookings@gmail.com"
                 className="flex items-center gap-2 text-neutral-400 hover:text-saffron-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                bhaktihub.bookings@gmail.com
+                SankirtanHub.bookings@gmail.com
               </a>
 
               <p className="flex items-center gap-2 text-neutral-400">
@@ -84,7 +84,7 @@ export default function Footer() {
 
        <div className="mt-8 lg:mt-12 pt-6 lg:pt-8 border-t border-neutral-800  flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-neutral-500">
-            © {new Date().getFullYear()} BhaktiHub. All rights reserved. Made
+            © {new Date().getFullYear()} SankirtanHub. All rights reserved. Made
             with devotion in India.
           </p>
         </div>

@@ -10,7 +10,7 @@ export function useFavorites() {
   // Current user ke liye localStorage key
   const getStorageKey = () => {
     if (!user) return null;
-    return `bhaktihub_favorites_${user.id}`;
+    return `SankirtanHub_favorites_${user.id}`;
   };
 
   // User ke saved favorites load karna

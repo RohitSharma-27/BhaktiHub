@@ -36,10 +36,10 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-const ADMIN_EMAIL = 'admin@bhaktihub.com';
+const ADMIN_EMAIL = 'admin@SankirtanHub.com';
 
-const USERS_KEY = 'bhaktihub_users';
-const SESSION_KEY = 'bhaktihub_session';
+const USERS_KEY = 'SankirtanHub_users';
+const SESSION_KEY = 'SankirtanHub_session';
 
 interface StoredUser extends LocalUser {
   password: string;

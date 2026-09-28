@@ -221,9 +221,9 @@ Venue: ${bookingForm.event_address}
 Artist Contact Details:
 Phone: PLEASE ADD ARTIST PHONE NUMBER BEFORE SENDING
 
-Thank you for choosing BhaktiHub.
+Thank you for choosing SankirtanHub.
 
-BhaktiHub
+SankirtanHub
 Devotional Artist Booking`;
 
       // Rejection email
@@ -242,7 +242,7 @@ Venue: ${bookingForm.event_address}
 
 Please contact us if you would like to discuss alternative options.
 
-BhaktiHub
+SankirtanHub
 Devotional Artist Booking`;
 
       // Open Gmail compose with pre-filled recipient,

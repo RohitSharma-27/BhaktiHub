@@ -347,7 +347,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Temple Trust Member',
     city: 'Varanasi',
     rating: 5,
-    text: 'BhaktiHub helped us find the perfect bhajan singer for our annual temple festival. The booking process was seamless and the artist was exceptional. Highly recommended for any devotional event!',
+    text: 'SankirtanHub helped us find the perfect bhajan singer for our annual temple festival. The booking process was seamless and the artist was exceptional. Highly recommended for any devotional event!',
     avatar_url: img(6148101),
   },
   {
@@ -356,7 +356,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Event Organizer',
     city: 'Delhi',
     rating: 5,
-    text: 'We organized a Janmashtami celebration and found an amazing Kirtan Mandali through BhaktiHub. The platform made it easy to compare artists, read reviews, and book with confidence.',
+    text: 'We organized a Janmashtami celebration and found an amazing Kirtan Mandali through SankirtanHub. The platform made it easy to compare artists, read reviews, and book with confidence.',
     avatar_url: img(774909),
   },
   {
@@ -365,7 +365,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Community Leader',
     city: 'Ahmedabad',
     rating: 4,
-    text: 'The darbar decoration service we booked through BhaktiHub transformed our community hall into a divine space. Professional service and beautiful work. Will definitely use again.',
+    text: 'The darbar decoration service we booked through SankirtanHub transformed our community hall into a divine space. Professional service and beautiful work. Will definitely use again.',
     avatar_url: img(1224064),
   },
   {
@@ -374,7 +374,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Devotee',
     city: 'Bengaluru',
     rating: 5,
-    text: 'Finding South Indian temple decorators was always a challenge until BhaktiHub. The platform has a great selection of verified artists and the booking process is so simple.',
+    text: 'Finding South Indian temple decorators was always a challenge until SankirtanHub. The platform has a great selection of verified artists and the booking process is so simple.',
     avatar_url: img(415829),
   },
   {
@@ -383,7 +383,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Festival Coordinator',
     city: 'Jaipur',
     rating: 5,
-    text: 'From sound systems to decoration to the bhajan singer, we booked everything for our community event through BhaktiHub. One platform, multiple services, zero hassle.',
+    text: 'From sound systems to decoration to the bhajan singer, we booked everything for our community event through SankirtanHub. One platform, multiple services, zero hassle.',
     avatar_url: img(1681010),
   },
   {
@@ -392,7 +392,7 @@ export const sampleTestimonials: Testimonial[] = [
     role: 'Homeowner',
     city: 'Mumbai',
     rating: 5,
-    text: 'Booked a harmonium player for a private Satyanarayan Katha at home. The artist was professional, punctual, and his music made our puja truly special. Thank you BhaktiHub!',
+    text: 'Booked a harmonium player for a private Satyanarayan Katha at home. The artist was professional, punctual, and his music made our puja truly special. Thank you SankirtanHub!',
     avatar_url: img(1239291),
   },
 ];
